@@ -2,26 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PartyPlannerPro.Data;
 using PartyPlannerPro.Models;
+using PartyPlannerPro.Models.ViewModels;
 
 namespace PartyPlannerPro.Controllers
 {
     public class EventsController : Controller
     {
+        // Private field to store user manager
+        private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly ApplicationDbContext _context;
 
-        public EventsController(ApplicationDbContext context)
+        public EventsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        // Private method to get current user
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Events
         public async Task<IActionResult> Index()
         {
+            var user = await GetCurrentUserAsync();
             var applicationDbContext = _context.Events.Include(e => e.User);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -46,10 +56,27 @@ namespace PartyPlannerPro.Controllers
         }
 
         // GET: Events/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
-            return View();
+            //instantiaite view model
+            CreateEventViewModel vm = new CreateEventViewModel();
+
+
+            //set up drop down to display and select venue names
+
+            vm.Venues = _context.Venues.Select(v => new SelectListItem
+            {
+                Value = v.Id.ToString(),
+                Text = v.VenueName
+            }).ToList();
+            vm.Venues.Insert(0, new SelectListItem()
+            {
+                Value = "0",
+                Text = "Please choose a venue"
+            });
+           
+
+            return View(vm);
         }
 
         // POST: Events/Create
@@ -57,16 +84,21 @@ namespace PartyPlannerPro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,EventName,EventDate,CustomerId,Budget,TotalGuests,ApplicationUserId,VenueId")] Event @event)
+        public async Task<IActionResult> Create(CreateEventViewModel vm)
         {
+            ModelState.Remove("Event.ApplicationUserId");
+
             if (ModelState.IsValid)
             {
-                _context.Add(@event);
+                var user = await GetCurrentUserAsync();
+
+                vm.Event.ApplicationUserId = user.Id;
+
+                _context.Add(vm.Event);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { vm.Event.Id });
             }
-            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", @event.ApplicationUserId);
-            return View(@event);
+            return View(vm);
         }
 
         // GET: Events/Edit/5

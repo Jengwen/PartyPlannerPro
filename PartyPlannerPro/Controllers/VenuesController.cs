@@ -54,7 +54,7 @@ namespace PartyPlannerPro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,VendorName,ContactPerson,PhoneNumber,City,State,MaxCapacity")] Venue venue)
+        public async Task<IActionResult> Create([Bind("Id,VenueName,ContactPerson,PhoneNumber,StreetAddress,City,State,MaxCapacity")] Venue venue)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace PartyPlannerPro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,VendorName,ContactPerson,PhoneNumber,City,State,MaxCapacity")] Venue venue)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,VenueName,ContactPerson,PhoneNumber,City,State,MaxCapacity")] Venue venue)
         {
             if (id != venue.Id)
             {

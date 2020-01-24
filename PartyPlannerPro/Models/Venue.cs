@@ -11,7 +11,7 @@ namespace PartyPlannerPro.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Venue Name")]
-        public string VendorName { get; set; }
+        public string VenueName { get; set; }
         [Required]
         [Display(Name = "Contact Person")]
         public string ContactPerson { get; set; }
