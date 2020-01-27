@@ -28,6 +28,9 @@ namespace PartyPlannerPro.Models
         [Display(Name= "Venue")]
         public int VenueId { get; set; }
         public ApplicationUser User {get; set;}
+        public Customer Customer { get; set; }
+        public Venue Venue { get; set; }
+
         [Display(Name= "Event Vendors")]
         public List<EventVendor> EventVendors { get; set; } = new List<EventVendor>();
 

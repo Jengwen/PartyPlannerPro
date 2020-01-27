@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PartyPlannerPro.Data;
 
 namespace PartyPlannerPro.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200127144730_ChangestoEventModel")]
+    partial class ChangestoEventModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -431,13 +433,13 @@ namespace PartyPlannerPro.Data.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cd3f14cb-6861-41a0-a6db-4d57d2fedab9",
+                            ConcurrencyStamp = "e5d76eea-7e6f-43e8-8d9d-063bf559a252",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEK8wahj7x3mG4iFgIdWS1EOhd0Knh19Tp2SNag8KprZ6kfoZAPcUJg+vFzK0dDB/ZA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDTXHAhnVV/AYJyqcvE78x8UEJBbV2tjZtvz0tHqnZ/2MojAijhN0ootLOPwd0J3Dg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,

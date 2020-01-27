@@ -47,6 +47,9 @@ namespace PartyPlannerPro.Data
                        .WithOne(EventVendors => EventVendors.Vendor)
                        .OnDelete(DeleteBehavior.Restrict);
 
+            //add foreign key to event for customerId
+            modelBuilder.Entity<Event>();
+
         }
 
     }
