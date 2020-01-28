@@ -35,7 +35,8 @@ namespace PartyPlannerPro.Controllers
             }
 
             var vendor = await _context.Vendors
-                .Include(v => v.Category)
+                .Include(v => v.Category).Include(e => e.EventVendors)
+                .ThenInclude(ev => ev.Event)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vendor == null)
             {
