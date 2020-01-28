@@ -47,20 +47,23 @@
             @Html.DisplayFor(model => model.Category.Id)
         </dd>
         <dt class="col-sm-2">
-            <h6>Upcoming Events:</h6>
+        <div><h6>Upcoming Events:</h6>
         </dt>
         @*Loop through all of the events for this vendor that have not occurred yet*@
-        <ul class="list-unstyled">
-            @foreach (var EventVendors in Model.EventVendors)
+        <div id="event-list">
+            <ul class="list-unstyled">
+                @foreach (var EventVendors in Model.EventVendors)
 
-                if(EventVendors.Event.EventDate > DateTime.Now)
-            {
-                <li>
-                    @Html.DisplayFor(model => EventVendors.Event.EventName)
-                </li>
-            }
-        </ul>
-    </dl>
+                    if (EventVendors.Event.EventDate > DateTime.Now)
+                    {
+                        <li>
+                            @Html.DisplayFor(model => EventVendors.Event.EventName)
+                        </li>
+                    }
+            </ul>
+        </div>
+</div>
+</dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

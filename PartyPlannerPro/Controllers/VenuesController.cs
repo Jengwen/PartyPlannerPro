@@ -34,6 +34,7 @@ namespace PartyPlannerPro.Controllers
             }
 
             var venue = await _context.Venues
+                .Include(v => v.Events)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (venue == null)
             {
