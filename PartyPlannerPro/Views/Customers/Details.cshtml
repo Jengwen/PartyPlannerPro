@@ -4,10 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
 <div>
-    <h4>Customer</h4>
+    <h4>Customer Details</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -34,9 +33,26 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
+        <div>
+            <h6>My Events</h6>
+            <div id="event-list">
+                @*Loop through all of the events for this customer that have not occurred yet*@
+                <ul class="list-unstyled">
+                    @foreach (var Events in Model.Events)
+
+                        if (Events.EventDate > DateTime.Now)
+                        {
+                            <li>
+                                @Html.DisplayFor(model => Events.EventName)
+                            </li>
+                        }
+                </ul>
+            </div>
+        </div>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> |
     <a asp-action="Index">Back to List</a>
 </div>

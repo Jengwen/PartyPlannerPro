@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,17 +13,26 @@ namespace PartyPlannerPro.Controllers
 {
     public class CustomersController : Controller
     {
+        // Private field to store user manager
+        private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly ApplicationDbContext _context;
 
-        public CustomersController(ApplicationDbContext context)
+        public CustomersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+
         }
+        // Private method to get current user
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            var user = await GetCurrentUserAsync();
+            var applicationDbContext = _context.Customers.Include(c => c.User).Include(c => c.Events);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Customers/Details/5
@@ -34,6 +44,7 @@ namespace PartyPlannerPro.Controllers
             }
 
             var customer = await _context.Customers
+                .Include(c => c.User).Include(c => c.Events)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
             {
@@ -56,8 +67,13 @@ namespace PartyPlannerPro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PhoneNumber")] Customer customer)
         {
+            ModelState.Remove("Event.ApplicationUserId");
+
             if (ModelState.IsValid)
             {
+                var user = await GetCurrentUserAsync();
+                customer.ApplicationUserId = user.Id;
+
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -93,10 +109,15 @@ namespace PartyPlannerPro.Controllers
                 return NotFound();
             }
 
+            ModelState.Remove("Event.ApplicationUserId");
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var user = await GetCurrentUserAsync();
+                    customer.ApplicationUserId = user.Id;
+
                     _context.Update(customer);
                     await _context.SaveChangesAsync();
                 }

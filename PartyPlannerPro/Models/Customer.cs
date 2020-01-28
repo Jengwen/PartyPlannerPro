@@ -24,6 +24,9 @@ namespace PartyPlannerPro.Models
         [Required]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser User { get; set; }
+
         public List<Event> Events { get; set; } = new List<Event>();
     }
 }
