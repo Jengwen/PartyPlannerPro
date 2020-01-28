@@ -22,16 +22,26 @@
             <h6>
                 @Html.DisplayFor(modelItem => item.EventDate)
             </h6>
+            <h6>Customer</h6>
             <p>
                 @Html.DisplayFor(modelItem => item.Customer.FirstName)
                 @Html.DisplayFor(modelItem => item.Customer.LastName)
             </p>
+            <h6>
+                @Html.DisplayNameFor(model => model.Budget)
+                </h6>
             <p>
                 @Html.DisplayFor(modelItem => item.Budget)
             </p>
+            <h6>
+                @Html.DisplayNameFor(model => model.TotalGuests)
+            </h6>
             <p>
                 @Html.DisplayFor(modelItem => item.TotalGuests)
             </p>
+            <h6>
+                @Html.DisplayNameFor(model => model.Venue.VenueName)
+            </h6>
             <p>
                 @Html.DisplayFor(modelItem => item.Venue.VenueName)
             </p>
