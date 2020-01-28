@@ -48,7 +48,7 @@ namespace PartyPlannerPro.Controllers
         // GET: Vendors/Create
         public IActionResult Create()
         {
-            ViewData["VendorCategoryId"] = new SelectList(_context.VendorCatergories, "Id", "Id");
+            ViewData["VendorCategoryId"] = new SelectList(_context.VendorCatergories, "Id", "CategoryName");
             return View();
         }
 
@@ -82,7 +82,7 @@ namespace PartyPlannerPro.Controllers
             {
                 return NotFound();
             }
-            ViewData["VendorCategoryId"] = new SelectList(_context.VendorCatergories, "Id", "Id", vendor.VendorCategoryId);
+            ViewData["VendorCategoryId"] = new SelectList(_context.VendorCatergories, "Id", "CategoryName", vendor.VendorCategoryId);
             return View(vendor);
         }
 

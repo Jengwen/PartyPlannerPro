@@ -151,6 +151,17 @@ namespace PartyPlannerPro.Controllers
                 Value = "0",
                 Text = "Please choose a vendor"
             });
+            vm.Customers = _context.Customers.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.FirstName + " "  + c.LastName
+            }).ToList();
+
+            vm.Customers.Insert(0, new SelectListItem()
+            {
+                Value = "0",
+                Text = "Please choose a customer"
+            });
 
             return View(vm);
         }
