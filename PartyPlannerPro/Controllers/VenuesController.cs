@@ -20,9 +20,21 @@ namespace PartyPlannerPro.Controllers
         }
 
         // GET: Venues
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string citySearch, int guests)
         {
-            return View(await _context.Venues.ToListAsync());
+            List<Venue> venues = await _context.Venues.ToListAsync();
+
+// search by city input
+            if (citySearch != null)
+            {
+                venues = venues.Where(venue => venue.City != null && venue.City.ToString().Contains(citySearch, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            //search by number of guests show only venues where maxCapacity is >= input #
+            else if(guests != null)
+            {
+                venues = venues.Where(venue => venue.MaxCapacity != null && venue.MaxCapacity >= guests).ToList();
+            }
+            return View(venues);
         }
 
         // GET: Venues/Details/5
