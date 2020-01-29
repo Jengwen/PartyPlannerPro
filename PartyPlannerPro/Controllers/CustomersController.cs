@@ -42,7 +42,7 @@ namespace PartyPlannerPro.Controllers
             {
                 return NotFound();
             }
-
+            //include list of events associated with this user id
             var customer = await _context.Customers
                 .Include(c => c.User).Include(c => c.Events)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -138,20 +138,32 @@ namespace PartyPlannerPro.Controllers
         }
 
         // GET: Customers/Delete/5
+        // Only delete customer if they have no upcoming events
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
+            //include events list with Customer
             var customer = await _context.Customers
+                .Include(c => c.User).Include(c => c.Events)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            //check for events associated with customer if list not empty send error message with ViewData
+
+           if(customer.Events.Count !=0)
+            {
+                ViewData["Error Message"] = "You can not delete this customer";
+            } else if(customer.Events.Count ==0)
+            {
+                ViewData["No Error"] = "Do you want to delete this customer?";
+            }
+            
             if (customer == null)
             {
                 return NotFound();
             }
-
             return View(customer);
         }
 
@@ -161,8 +173,13 @@ namespace PartyPlannerPro.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
+
+            // if list of events is empty ok to delete
+            if (customer.Events.Count == 0)
+            {
+                _context.Customers.Remove(customer);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
 
