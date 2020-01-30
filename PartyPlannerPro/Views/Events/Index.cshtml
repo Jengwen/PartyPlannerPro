@@ -10,52 +10,48 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-
 <div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="card m-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5>
+                        @Html.DisplayFor(modelItem => item.EventName)
+                    </h5>
+                    <h6>
+                        @Html.DisplayFor(modelItem => item.EventDate)
+                    </h6>
+                    <h6>Customer</h6>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                        @Html.DisplayFor(modelItem => item.Customer.LastName)
+                    </p>
+                    <h6>
+                        @Html.DisplayNameFor(model => model.Budget)
+                    </h6>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Budget)
+                    </p>
+                    <h6>
+                        @Html.DisplayNameFor(model => model.TotalGuests)
+                    </h6>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.TotalGuests)
+                    </p>
+                    <h6>
+                        @Html.DisplayNameFor(model => model.Venue.VenueName)
+                    </h6>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Venue.VenueName)
+                    </p>
 
-    @foreach (var item in Model)
-    {
-        <div class="row">
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5>
-                            @Html.DisplayFor(modelItem => item.EventName)
-                        </h5>
-                        <h6>
-                            @Html.DisplayFor(modelItem => item.EventDate)
-                        </h6>
-                        <h6>Customer</h6>
-                        <p>
-                            @Html.DisplayFor(modelItem => item.Customer.FirstName)
-                            @Html.DisplayFor(modelItem => item.Customer.LastName)
-                        </p>
-                        <h6>
-                            @Html.DisplayNameFor(model => model.Budget)
-                        </h6>
-                        <p>
-                            @Html.DisplayFor(modelItem => item.Budget)
-                        </p>
-                        <h6>
-                            @Html.DisplayNameFor(model => model.TotalGuests)
-                        </h6>
-                        <p>
-                            @Html.DisplayFor(modelItem => item.TotalGuests)
-                        </p>
-                        <h6>
-                            @Html.DisplayNameFor(model => model.Venue.VenueName)
-                        </h6>
-                        <p>
-                            @Html.DisplayFor(modelItem => item.Venue.VenueName)
-                        </p>
-                        <div>
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <div />
-                        </div>
-                    </div>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
                 </div>
             </div>
-        </div>
-    }
 
+        }
+    </div>
 </div>
+   

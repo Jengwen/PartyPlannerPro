@@ -72,7 +72,15 @@ namespace PartyPlannerPro.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VendorCategoryId"] = new SelectList(_context.VendorCatergories, "Id", "Id", vendor.VendorCategoryId);
+            ViewData["VendorCategoryId"] = new SelectList(_context.VendorCatergories, "Id", "Id", vendor.VendorName);
+
+           // insert first select item
+
+           //.Insert(0, new SelectListItem()
+            //{
+            //    Value = "0",
+            //    Text = "Please choose a vendor"
+            //});
             return View(vendor);
         }
 

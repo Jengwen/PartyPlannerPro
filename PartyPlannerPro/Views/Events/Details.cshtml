@@ -57,8 +57,8 @@
             @foreach (var EventVendors in Model.EventVendors)
             {
                 <li>
-                    @Html.DisplayFor(model => EventVendors.Vendor.VendorName)
-                </li>
+                    <a asp-controller="Vendors" asp-action="Details" asp-route-id="@EventVendors.Vendor.Id"> @Html.DisplayFor(model => EventVendors.Vendor.VendorName)</a>
+</li>
             }
         </ul>
     </div>

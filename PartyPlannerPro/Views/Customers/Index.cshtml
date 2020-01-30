@@ -9,43 +9,36 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="card m-3">
+                <div class="card-body">
+                    <h5>Customer</h5>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.FirstName)                  
+                   
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </p>
+                    <h6>@Html.DisplayNameFor(model => model.Email)</h6>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </p>
+                    <h6>
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </h6>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </p>
+                   
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                   
+                </div>
+            </div>
+        }
+    </div>
+</div>   
