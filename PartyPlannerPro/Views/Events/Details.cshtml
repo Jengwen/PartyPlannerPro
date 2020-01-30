@@ -23,7 +23,7 @@
             @Html.DisplayFor(model => model.EventDate)
         </dd>
         <dt class="col-sm-2">
-           <h6>Customer</h6>
+            <h6>Customer</h6>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Customer.FirstName)
@@ -47,9 +47,12 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Venue.VenueName)
         </dd>
-        <dt class="col-sm-2">
+    </dl>
+
+    <div id="event-list">
+        <h5>
             @Html.DisplayNameFor(model => model.EventVendors)
-        </dt>
+        </h5>
         <ul class="list-unstyled">
             @foreach (var EventVendors in Model.EventVendors)
             {
@@ -58,7 +61,7 @@
                 </li>
             }
         </ul>
-    </dl>
+    </div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>

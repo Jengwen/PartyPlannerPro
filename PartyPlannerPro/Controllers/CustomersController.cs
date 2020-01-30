@@ -31,7 +31,7 @@ namespace PartyPlannerPro.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
-            var applicationDbContext = _context.Customers.Include(c => c.User).Include(c => c.Events);
+            var applicationDbContext = _context.Customers.Include(c => c.Events).Where(c => c.User == user);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -57,6 +57,7 @@ namespace PartyPlannerPro.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
+
             return View();
         }
 

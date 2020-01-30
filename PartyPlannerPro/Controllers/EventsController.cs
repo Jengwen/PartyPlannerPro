@@ -32,7 +32,7 @@ namespace PartyPlannerPro.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
-            var applicationDbContext = _context.Events.Include(e => e.User).Include(e => e.Customer).Include(e =>e.Venue);
+            var applicationDbContext = _context.Events.Where(e => e.User == user).Include(e => e.Customer).Include(e =>e.Venue);
             return View(await applicationDbContext.ToListAsync());
         }
 
