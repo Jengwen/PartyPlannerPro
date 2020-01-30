@@ -20,15 +20,18 @@ namespace PartyPlannerPro.Controllers
         }
 
         // GET: Vendors
-        public async Task<IActionResult> Index(string citySearch)
+        public async Task<IActionResult> Index(string citySearch, int categoryId)
         {
            List<Vendor> vendors = await _context.Vendors.Include(v => v.Category).ToListAsync();
+            ViewData["VendorCategoryId"] = new SelectList(_context.VendorCatergories, "Id", "CategoryName");
 
             if (citySearch != null)
             {
                 vendors = vendors.Where(vendor => vendor.City != null && vendor.City.ToString().Contains(citySearch, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-
+            }else if (categoryId != null)
+                {
+                vendors = vendors.Where(vendor => vendor.VendorCategoryId != null && vendor.VendorCategoryId == categoryId).ToList();
+            } 
             return View(vendors);
         }
 
