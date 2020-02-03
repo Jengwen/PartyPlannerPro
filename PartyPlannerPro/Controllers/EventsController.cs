@@ -31,8 +31,15 @@ namespace PartyPlannerPro.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
+            //get logged in user
             var user = await GetCurrentUserAsync();
-            var applicationDbContext = _context.Events.Where(e => e.User == user).Include(e => e.Customer).Include(e =>e.Venue);
+
+            //return events for only logged in user with customer name and venue name, orber by date and only events that have not occurred
+
+            var applicationDbContext = _context.Events.Where(e => e.User == user).Include(e => e.Customer).Include(e =>e.Venue)
+                                .Where(d => d.EventDate > DateTime.Today)
+                                .OrderBy(o => o.EventDate);
+            
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -276,10 +283,14 @@ namespace PartyPlannerPro.Controllers
         }
 
         // get method for calendar view to get events based on dates
-        public async Task<IActionResult> Calendar(string dateRange)
+        public async Task<IActionResult> Calendar(int ListItem)
         {
             var user = await GetCurrentUserAsync();
-            var applicationDbContext = _context.Events.Where(e => e.User == user).Include(e => e.Customer).Include(e => e.Venue);
+            List<Event> items = await _context.Events.Where(e => e.User == user)
+                .Include(e => e.Customer)
+                .Include(e => e.Venue)
+               // .Where(d=> d.EventDate > DateTime.Today)
+                .OrderBy(o => o.EventDate).ToListAsync();
 
             //select drop down to choose time frame this week, next 2 weeks, this month, past events, all events
 
@@ -288,32 +299,39 @@ namespace PartyPlannerPro.Controllers
                 new SelectListItem
                 {
                     Value = null,
-                    Text = "Choose a Date Range"
-                }
+                    Text = "Choose a Date Range", Selected=true
+                },
+                 new SelectListItem {Text="This Week",Value="1"},
+          new SelectListItem {Text="Next Two Weeks",Value="2" },
+          new SelectListItem {Text="This Month",Value="3"},
+          new SelectListItem {Text="Past Events",Value="4"},
             };
+            ViewBag.ListItem = selectDate;
+
 
             //if EvenetDate > 1 - 7 days from DateTimeNow
-            foreach (var Event in applicationDbContext)
-                if (Event.EventDate > DateTime.Today && Event.EventDate < DateTime.Today.AddDays(7))
+                if (ListItem == 1)
                 {
-                    return View(await applicationDbContext.ToListAsync());
+                    items = items.Where(item =>item.EventDate > DateTime.Today && item.EventDate < DateTime.Today.AddDays(7)).ToList();
+                                
+                 }
+                else if (ListItem == 2)
+                {
+                //if EventDate > 1 -14 days from now
+                items = items.Where(item => item.EventDate > DateTime.Today && item.EventDate < DateTime.Today.AddDays(14)).ToList();
                 }
-            //if EventDate > 1 -14 days from now
-            else if (Event.EventDate > DateTime.Today && Event.EventDate < DateTime.Today.AddDays(14))
-            {
-                return View(await applicationDbContext.ToListAsync());
-            }
-            //if EventDate > 1- 30 days
-            else if (Event.EventDate > DateTime.Today && Event.EventDate < DateTime.Today.AddDays(30))
-            {
-                return View(await applicationDbContext.ToListAsync());
-            }
-            //if EVentDate < now
-           else if (Event.EventDate < DateTime.Today)
-            {
-                return View(await applicationDbContext.ToListAsync());
-            }
-            return View(await applicationDbContext.ToListAsync());
+                //if EventDate > 1- 30 days
+                else if (ListItem == 3)
+                {
+                items = items.Where(item => item.EventDate > DateTime.Today && item.EventDate < DateTime.Today.AddDays(30)).ToList();
+                }
+                //if EVentDate < now
+                else if (ListItem == 4)
+                {
+                items = items.Where(item => item.EventDate < DateTime.Today).ToList();
+                   
+                }
+            return View(items);
         }
     }
 }
