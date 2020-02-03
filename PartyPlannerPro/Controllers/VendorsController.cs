@@ -20,17 +20,18 @@ namespace PartyPlannerPro.Controllers
         }
 
         // GET: Vendors
-        public async Task<IActionResult> Index(string citySearch, int categoryId)
+        public async Task<IActionResult> Index(string citySearch, int VendorCategoryId)
         {
            List<Vendor> vendors = await _context.Vendors.Include(v => v.Category).ToListAsync();
-            ViewData["VendorCategoryId"] = new SelectList(_context.VendorCatergories, "Id", "CategoryName");
+            ViewData["VendorCategoryId"] = new SelectList(_context.VendorCatergories, "Id", "CategoryName" );
 
+        
             if (citySearch != null)
             {
                 vendors = vendors.Where(vendor => vendor.City != null && vendor.City.ToString().Contains(citySearch, StringComparison.OrdinalIgnoreCase)).ToList();
-            }else if (categoryId != null)
-                {
-                vendors = vendors.Where(vendor => vendor.VendorCategoryId != null && vendor.VendorCategoryId == categoryId).ToList();
+            } else if (VendorCategoryId != 0)
+            {
+                vendors = vendors.Where(vendor => vendor.VendorCategoryId != 0 && vendor.VendorCategoryId == VendorCategoryId).ToList();
             } 
             return View(vendors);
         }
@@ -77,13 +78,6 @@ namespace PartyPlannerPro.Controllers
             }
             ViewData["VendorCategoryId"] = new SelectList(_context.VendorCatergories, "Id", "Id", vendor.VendorName);
 
-           // insert first select item
-
-           //.Insert(0, new SelectListItem()
-            //{
-            //    Value = "0",
-            //    Text = "Please choose a vendor"
-            //});
             return View(vendor);
         }
 

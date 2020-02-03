@@ -274,5 +274,46 @@ namespace PartyPlannerPro.Controllers
         {
             return _context.Events.Any(e => e.Id == id);
         }
+
+        // get method for calendar view to get events based on dates
+        public async Task<IActionResult> Calendar(string dateRange)
+        {
+            var user = await GetCurrentUserAsync();
+            var applicationDbContext = _context.Events.Where(e => e.User == user).Include(e => e.Customer).Include(e => e.Venue);
+
+            //select drop down to choose time frame this week, next 2 weeks, this month, past events, all events
+
+            List<SelectListItem> selectDate = new List<SelectListItem>()
+            {
+                new SelectListItem
+                {
+                    Value = null,
+                    Text = "Choose a Date Range"
+                }
+            };
+
+            //if EvenetDate > 1 - 7 days from DateTimeNow
+            foreach (var Event in applicationDbContext)
+                if (Event.EventDate > DateTime.Today && Event.EventDate < DateTime.Today.AddDays(7))
+                {
+                    return View(await applicationDbContext.ToListAsync());
+                }
+            //if EventDate > 1 -14 days from now
+            else if (Event.EventDate > DateTime.Today && Event.EventDate < DateTime.Today.AddDays(14))
+            {
+                return View(await applicationDbContext.ToListAsync());
+            }
+            //if EventDate > 1- 30 days
+            else if (Event.EventDate > DateTime.Today && Event.EventDate < DateTime.Today.AddDays(30))
+            {
+                return View(await applicationDbContext.ToListAsync());
+            }
+            //if EVentDate < now
+           else if (Event.EventDate < DateTime.Today)
+            {
+                return View(await applicationDbContext.ToListAsync());
+            }
+            return View(await applicationDbContext.ToListAsync());
+        }
     }
 }
