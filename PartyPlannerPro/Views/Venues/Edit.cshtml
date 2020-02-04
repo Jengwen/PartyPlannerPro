@@ -48,6 +48,11 @@
                 <span asp-validation-for="MaxCapacity" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-light" />
             </div>
         </form>

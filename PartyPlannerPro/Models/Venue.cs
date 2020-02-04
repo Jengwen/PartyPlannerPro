@@ -31,6 +31,8 @@ namespace PartyPlannerPro.Models
         [Required]
         [Display(Name = "Max Capacity")]
         public int MaxCapacity { get; set; }
+        public string ImageUrl { get; set; }
+
         public List<Event> Events { get; set; } = new List<Event>();
 
     }

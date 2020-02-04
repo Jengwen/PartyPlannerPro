@@ -201,29 +201,32 @@ namespace PartyPlannerPro.Controllers
                         .Where(ev => ev.EventId == vm.Event.Id).ToListAsync();
 
                     //Loop through the vendors we have just chosen
-                    vm.SelectedVendors.ForEach(VendorId =>
+                    if (vm.SelectedVendors != null)
                     {
-                        if (!alreadyChosenVendors.Any(EventVendor => EventVendor.VendorId == VendorId))
+                        vm.SelectedVendors.ForEach(VendorId =>
+                      {
+                          if (!alreadyChosenVendors.Any(EventVendor => EventVendor.VendorId == VendorId))
+                          {
+                              EventVendor newVendor = new EventVendor()
+                              {
+                                  EventId = vm.Event.Id,
+                                  VendorId = VendorId,
+                              };
+                              //Add new chosen vendors to list
+                              _context.EventVendors.Add(newVendor);
+                          }
+                      });
+
+                        //Loop through previous chosen vendors and check if still chosen, if not delete them from the event's list of selected vendors
+                        alreadyChosenVendors.ForEach(eventVendor =>
                         {
-                            EventVendor newVendor = new EventVendor()
+                            if (!vm.SelectedVendors.Any(vendorId => vendorId == eventVendor.VendorId))
                             {
-                                EventId = vm.Event.Id,
-                                VendorId = VendorId,
-                            };
-                            //Add new chosen vendors to list
-                            _context.EventVendors.Add(newVendor);
-                        }
-                    });
-                    //Loop through previous chosen vendors and check if still chosen, if not delete them from the event's list of selected vendors
-                    alreadyChosenVendors.ForEach(eventVendor =>
-                    {
-                        if (!vm.SelectedVendors.Any(vendorId => vendorId == eventVendor.VendorId))
-                        {
                             //remove from list
                             _context.EventVendors.Remove(eventVendor);
-                        }
-                    });
-
+                            }
+                        });
+                    }
                     //update information about event 
                     _context.Update(vm.Event);
                     await _context.SaveChangesAsync();
@@ -334,7 +337,7 @@ namespace PartyPlannerPro.Controllers
                 }
             return View(items);
         }
-        //customer graphs method
+        //events graphs method
         public async Task<IActionResult> Reports()
         {
 
