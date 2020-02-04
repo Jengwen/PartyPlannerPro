@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PartyPlannerPro.Data;
 using PartyPlannerPro.Models;
+using PartyPlannerPro.Models.ViewModels;
 
 namespace PartyPlannerPro.Controllers
 {
@@ -184,7 +185,9 @@ namespace PartyPlannerPro.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
+       
+
+            private bool CustomerExists(int id)
         {
             return _context.Customers.Any(e => e.Id == id);
         }

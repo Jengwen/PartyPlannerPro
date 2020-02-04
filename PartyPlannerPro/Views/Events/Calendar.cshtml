@@ -54,8 +54,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TotalGuests)
             </td>
-             <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Customer.FirstName)
+                @Html.DisplayFor(modelItem => item.Customer.LastName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Venue.VenueName)

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PartyPlannerPro.Data;
 using PartyPlannerPro.Models;
 using PartyPlannerPro.Models.ViewModels;
+using PartyPlannerPro.Models.ViewModels.Report;
 
 namespace PartyPlannerPro.Controllers
 {
@@ -333,5 +334,32 @@ namespace PartyPlannerPro.Controllers
                 }
             return View(items);
         }
+        //customer graphs method
+        public async Task<IActionResult> Reports()
+        {
+
+            var user = await GetCurrentUserAsync();
+
+            //instantiate view model
+
+            ReportsViewModel rVM = new ReportsViewModel();
+
+            //List of events with venue information
+
+            List<Event> scheduledEvents = await _context.Events.Include(e => e.Venue).ToListAsync();
+
+            // count number of times venue is used in events
+
+            rVM.topVenues = (from e in scheduledEvents group e by e.VenueId into gr orderby gr.Count()
+                            select new PopularVenue()
+                            {
+                                //scheduledEvent = gr.ToList()[0].Event.VenueName,
+                                numberOfEvents = gr.ToList().Count()
+                            })         
+                         .ToList();
+
+            return View(rVM);
+        }
+
     }
 }
