@@ -7,7 +7,7 @@ namespace PartyPlannerPro.Models.ViewModels.Report
 {
     public class PopularVenue
     {
-        public Event scheduledEvent { get; set; }
+        public Venue venues { get; set; }
         public int numberOfEvents { get; set; }
     }
 }

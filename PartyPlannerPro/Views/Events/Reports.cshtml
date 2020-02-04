@@ -1,6 +1,6 @@
 ﻿@model PartyPlannerPro.Models.ViewModels.ReportsViewModel
 @{
-    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.topVenues.Select(x => x.scheduledEvent.Venue.VenueName).ToList());
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.topVenues.Select(x => x.venues.VenueName).ToList());
     var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.topVenues.Select(x => x.numberOfEvents).ToList());
     ViewData["Title"] = "Bar Chart";
 }
@@ -34,7 +34,7 @@
         var data = {
                 labels: @Html.Raw(XLabels),
                 datasets: [{
-                    label: "Customers",
+                    label: "Events",
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',

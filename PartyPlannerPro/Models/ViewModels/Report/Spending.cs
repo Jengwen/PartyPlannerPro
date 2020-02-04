@@ -7,7 +7,7 @@ namespace PartyPlannerPro.Models.ViewModels.Report
 {
     public class Spending   
     {
-        public Event party { get; set; }
+        public Customer customer { get; set; }
         public int totalSpending { get; set; }
     }
 }

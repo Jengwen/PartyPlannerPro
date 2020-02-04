@@ -353,7 +353,7 @@ namespace PartyPlannerPro.Controllers
             rVM.topVenues = (from e in scheduledEvents group e by e.VenueId into gr orderby gr.Count()
                             select new PopularVenue()
                             {
-                                //scheduledEvent = gr.ToList()[0].Event.VenueName,
+                                venues = gr.ToList()[0].Venue,
                                 numberOfEvents = gr.ToList().Count()
                             })         
                          .ToList();

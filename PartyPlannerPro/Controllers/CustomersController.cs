@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using PartyPlannerPro.Data;
 using PartyPlannerPro.Models;
 using PartyPlannerPro.Models.ViewModels;
+using PartyPlannerPro.Models.ViewModels.Report;
+
 
 namespace PartyPlannerPro.Controllers
 {
@@ -185,9 +187,36 @@ namespace PartyPlannerPro.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
+        //customer spending graphs method
+        public async Task<IActionResult> Reports()
+        {
 
-            private bool CustomerExists(int id)
+            var user = await GetCurrentUserAsync();
+
+            //instantiate view model
+
+            ReportsViewModel rVM = new ReportsViewModel();
+
+            //List of events with venue information
+
+            List<Customer> customers = await _context.Customers.Include(c => c.Event).ToListAsync();
+
+            // count number of times venue is used in events
+
+            rVM.topSpending = (from c in scheduledEvents
+                             group c by c.VenueId into gr
+                             orderby gr.Count()
+                             select new Spending()
+                             {
+                                 customer = gr.ToList()[0].Venue,
+                                 totalSpending = gr.ToList().Count()
+                             })
+                         .ToList();
+
+            return View(rVM);
+        }
+
+        private bool CustomerExists(int id)
         {
             return _context.Customers.Any(e => e.Id == id);
         }
