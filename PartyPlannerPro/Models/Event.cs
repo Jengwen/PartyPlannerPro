@@ -18,7 +18,7 @@ namespace PartyPlannerPro.Models
         [Required]
         [Display(Name = "Customer")]
         public int CustomerId { get; set; }
-        public double Budget { get; set; }
+        public int Budget { get; set; }
         [Required]
         [Display(Name = "Total Number of Guests")]
         public int TotalGuests { get; set; }

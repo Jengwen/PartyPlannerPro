@@ -199,18 +199,18 @@ namespace PartyPlannerPro.Controllers
 
             //List of events with venue information
 
-            List<Customer> customerEvents = await _context.Customers.Include(c => c.Events).ToListAsync();
+            List<Event> customerEvents = await _context.Events.Where(e => e.User == user).Include(e => e.Customer).ToListAsync();
 
 
             // add up budgets for each customer
 
-            rVM.topSpending = (from c in customerEvents
-                             group c by c.ApplicationUserId into gr
-                             orderby gr.Count()
-                             select new Spending()
+            rVM.topSpending = (from e in customerEvents
+                               group e by e.CustomerId into gr
+                           
+                               select new Spending()
                              {
-                                 //customer = gr.ToList()[0].FirstName,
-                                 totalSpending = gr.ToList().Count()
+                                 customer = gr.ToList()[0].Customer,
+                                 totalSpending = gr.Sum(x => x.Budget)
                              })
                          .ToList();
 

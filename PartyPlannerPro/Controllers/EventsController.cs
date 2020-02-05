@@ -308,7 +308,9 @@ namespace PartyPlannerPro.Controllers
                  new SelectListItem {Text="This Week",Value="1"},
           new SelectListItem {Text="Next Two Weeks",Value="2" },
           new SelectListItem {Text="This Month",Value="3"},
-          new SelectListItem {Text="Past Events",Value="4"},
+          new SelectListItem {Text="Next Two Months",Value="4"},
+          new SelectListItem {Text="Past Events",Value="5"},
+
             };
             ViewBag.ListItem = selectDate;
 
@@ -329,12 +331,18 @@ namespace PartyPlannerPro.Controllers
                 {
                 items = items.Where(item => item.EventDate > DateTime.Today && item.EventDate < DateTime.Today.AddDays(30)).ToList();
                 }
-                //if EVentDate < now
-                else if (ListItem == 4)
+            // if Event Date is in the next 2 months
+            else if (ListItem == 4)
+            {
+                items = items.Where(item => item.EventDate > DateTime.Today && item.EventDate < DateTime.Today.AddDays(60)).ToList();
+            }
+            //if EVentDate < now
+            else if (ListItem == 5)
                 {
                 items = items.Where(item => item.EventDate < DateTime.Today).ToList();
                    
                 }
+                
             return View(items);
         }
         //events graphs method
