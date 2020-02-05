@@ -45,8 +45,10 @@
                 <span asp-validation-for="Event.VenueId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label  class="control-label">Choose Vendors For This Event</label>
+                <label class="control-label">Choose Vendors For This Event</label>
                 <select multiple asp-for="@Model.SelectedVendors" class="form-control" asp-items="@Model.Vendors"></select>
+                <span asp-validation-for="Event.EventVendors" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-light" />

@@ -10,6 +10,7 @@
 <p>
     <a asp-action="Create">Create New Vendor</a> | <a asp-controller="VendorCategories" asp-action="Create">Create a New Vendor Category</a>
 </p>
+@*Search vendors by city search box*@
 
 <div class="form-group">
     <form asp-action="Index" class="form-inline">
@@ -17,7 +18,15 @@
 
         <button id="search-btn" class="btn btn-light my-2 my-sm-0" type="submit">Search</button>
     </form>
+
+    @* Search by Category from dropdown list  *@
+    
+<form class="form-inline" >
+   @Html.DropDownList("VendorCategoryId", ViewData["VendorCategoryId"] as List<SelectListItem>, "" )
+    <button id="search-btn" class="btn btn-light my-2 my-sm-0" type="submit">Search</button>
+</form>
 </div>
+   
 
 <table class="table">
     <thead>

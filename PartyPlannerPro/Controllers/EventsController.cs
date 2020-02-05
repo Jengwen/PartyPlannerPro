@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PartyPlannerPro.Data;
 using PartyPlannerPro.Models;
 using PartyPlannerPro.Models.ViewModels;
+using PartyPlannerPro.Models.ViewModels.Report;
 
 namespace PartyPlannerPro.Controllers
 {
@@ -31,8 +32,15 @@ namespace PartyPlannerPro.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
+            //get logged in user
             var user = await GetCurrentUserAsync();
-            var applicationDbContext = _context.Events.Where(e => e.User == user).Include(e => e.Customer).Include(e =>e.Venue);
+
+            //return events for only logged in user with customer name and venue name, orber by date and only events that have not occurred
+
+            var applicationDbContext = _context.Events.Where(e => e.User == user).Include(e => e.Customer).Include(e =>e.Venue)
+                                .Where(d => d.EventDate > DateTime.Today)
+                                .OrderBy(o => o.EventDate);
+            
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -274,5 +282,84 @@ namespace PartyPlannerPro.Controllers
         {
             return _context.Events.Any(e => e.Id == id);
         }
+
+        // get method for calendar view to get events based on dates
+        public async Task<IActionResult> Calendar(int ListItem)
+        {
+            var user = await GetCurrentUserAsync();
+            List<Event> items = await _context.Events.Where(e => e.User == user)
+                .Include(e => e.Customer)
+                .Include(e => e.Venue)
+               // .Where(d=> d.EventDate > DateTime.Today)
+                .OrderBy(o => o.EventDate).ToListAsync();
+
+            //select drop down to choose time frame this week, next 2 weeks, this month, past events, all events
+
+            List<SelectListItem> selectDate = new List<SelectListItem>()
+            {
+                new SelectListItem
+                {
+                    Value = null,
+                    Text = "Choose a Date Range", Selected=true
+                },
+                 new SelectListItem {Text="This Week",Value="1"},
+          new SelectListItem {Text="Next Two Weeks",Value="2" },
+          new SelectListItem {Text="This Month",Value="3"},
+          new SelectListItem {Text="Past Events",Value="4"},
+            };
+            ViewBag.ListItem = selectDate;
+
+
+            //if EvenetDate > 1 - 7 days from DateTimeNow
+                if (ListItem == 1)
+                {
+                    items = items.Where(item =>item.EventDate > DateTime.Today && item.EventDate < DateTime.Today.AddDays(7)).ToList();
+                                
+                 }
+                else if (ListItem == 2)
+                {
+                //if EventDate > 1 -14 days from now
+                items = items.Where(item => item.EventDate > DateTime.Today && item.EventDate < DateTime.Today.AddDays(14)).ToList();
+                }
+                //if EventDate > 1- 30 days
+                else if (ListItem == 3)
+                {
+                items = items.Where(item => item.EventDate > DateTime.Today && item.EventDate < DateTime.Today.AddDays(30)).ToList();
+                }
+                //if EVentDate < now
+                else if (ListItem == 4)
+                {
+                items = items.Where(item => item.EventDate < DateTime.Today).ToList();
+                   
+                }
+            return View(items);
+        }
+        //customer graphs method
+        public async Task<IActionResult> Reports()
+        {
+
+            var user = await GetCurrentUserAsync();
+
+            //instantiate view model
+
+            ReportsViewModel rVM = new ReportsViewModel();
+
+            //List of events with venue information
+
+            List<Event> scheduledEvents = await _context.Events.Include(e => e.Venue).ToListAsync();
+
+            // count number of times venue is used in events
+
+            rVM.topVenues = (from e in scheduledEvents group e by e.VenueId into gr orderby gr.Count()
+                            select new PopularVenue()
+                            {
+                                venues = gr.ToList()[0].Venue,
+                                numberOfEvents = gr.ToList().Count()
+                            })         
+                         .ToList();
+
+            return View(rVM);
+        }
+
     }
 }
