@@ -12,6 +12,7 @@ namespace PartyPlannerPro.Models
         [Required]
         [Display(Name = "Category Name")]
         public string CategoryName { get; set; }
+
         public List<Vendor> Vendors { get; set; } = new List<Vendor>();
     }
 }
