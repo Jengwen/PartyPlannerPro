@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PartyPlannerPro.Data;
 using PartyPlannerPro.Models;
+using PartyPlannerPro.Models.ViewModels;
 
 namespace PartyPlannerPro.Controllers
 {
@@ -46,7 +48,10 @@ namespace PartyPlannerPro.Controllers
         // GET: VendorCategories/Create
         public IActionResult Create()
         {
-            return View();
+            //instantiate view model for image uploader
+            ImageUploadViewModel vm = new ImageUploadViewModel();
+
+            return View(vm);
         }
 
         // POST: VendorCategories/Create
@@ -54,31 +59,48 @@ namespace PartyPlannerPro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CategoryName")] VendorCategory vendorCategory)
+        public async Task<IActionResult> Create(ImageUploadViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(vendorCategory);
+                // check to see if image file exists
+                if (vm.ImageFile != null)
+                {
+                    // convert image into byte array
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await vm.ImageFile.CopyToAsync(memoryStream);
+                        vm.vendorCategory.CategoryImage = memoryStream.ToArray();
+                    }
+                };
+                _context.Add(vm.vendorCategory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(vendorCategory);
+            else
+            {
+
+            }
+            return View(vm);
         }
 
         // GET: VendorCategories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            //instantiate view model for image uploader
+           EditImageVCViewModel evm = new EditImageVCViewModel();
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var vendorCategory = await _context.VendorCatergories.FindAsync(id);
-            if (vendorCategory == null)
+            evm.vendorCategory = await _context.VendorCatergories.FindAsync(id);
+            if (evm.vendorCategory == null)
             {
                 return NotFound();
             }
-            return View(vendorCategory);
+            return View(evm);
         }
 
         // POST: VendorCategories/Edit/5
@@ -86,23 +108,34 @@ namespace PartyPlannerPro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CategoryName")] VendorCategory vendorCategory)
+        public async Task<IActionResult> Edit(int id, EditImageVCViewModel evm)
         {
-            if (id != vendorCategory.Id)
+
+            if (id != evm.vendorCategory.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                // check to see if image file exists
+                if (evm.ImageFile != null)
+                {
+                    // convert image into byte array
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await evm.ImageFile.CopyToAsync(memoryStream);
+                        evm.vendorCategory.CategoryImage = memoryStream.ToArray();
+                    }
+                };
                 try
                 {
-                    _context.Update(vendorCategory);
+                    _context.Update(evm.vendorCategory);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VendorCategoryExists(vendorCategory.Id))
+                    if (!VendorCategoryExists(evm.vendorCategory.Id))
                     {
                         return NotFound();
                     }
@@ -113,7 +146,7 @@ namespace PartyPlannerPro.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(vendorCategory);
+            return View(evm);
         }
 
         // GET: VendorCategories/Delete/5

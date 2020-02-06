@@ -18,12 +18,12 @@
 
         <button id="search-btn" class="btn btn-light my-2 my-sm-0" type="submit">Search</button>
     </form>
-
+    </div>
     @* Search by Category from dropdown list  *@
-    
+ <div class=" = form-group">
 <form class="form-inline" >
-   @Html.DropDownList("VendorCategoryId", ViewData["VendorCategoryId"] as List<SelectListItem>, "" )
-    <button id="search-btn" class="btn btn-light my-2 my-sm-0" type="submit">Search</button>
+   @Html.DropDownList("VendorCategoryId", ViewData["VendorCategoryId"] as List<SelectListItem>, "Search by Category" )
+    <button id="search-btn" class="btn btn-light my-2 my-sm-0 ml-2" type="submit">Search</button>
 </form>
 </div>
    
