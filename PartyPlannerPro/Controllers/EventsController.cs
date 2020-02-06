@@ -201,29 +201,32 @@ namespace PartyPlannerPro.Controllers
                         .Where(ev => ev.EventId == vm.Event.Id).ToListAsync();
 
                     //Loop through the vendors we have just chosen
-                    vm.SelectedVendors.ForEach(VendorId =>
+                    if (vm.SelectedVendors != null)
                     {
-                        if (!alreadyChosenVendors.Any(EventVendor => EventVendor.VendorId == VendorId))
+                        vm.SelectedVendors.ForEach(VendorId =>
+                      {
+                          if (!alreadyChosenVendors.Any(EventVendor => EventVendor.VendorId == VendorId))
+                          {
+                              EventVendor newVendor = new EventVendor()
+                              {
+                                  EventId = vm.Event.Id,
+                                  VendorId = VendorId,
+                              };
+                              //Add new chosen vendors to list
+                              _context.EventVendors.Add(newVendor);
+                          }
+                      });
+
+                        //Loop through previous chosen vendors and check if still chosen, if not delete them from the event's list of selected vendors
+                        alreadyChosenVendors.ForEach(eventVendor =>
                         {
-                            EventVendor newVendor = new EventVendor()
+                            if (!vm.SelectedVendors.Any(vendorId => vendorId == eventVendor.VendorId))
                             {
-                                EventId = vm.Event.Id,
-                                VendorId = VendorId,
-                            };
-                            //Add new chosen vendors to list
-                            _context.EventVendors.Add(newVendor);
-                        }
-                    });
-                    //Loop through previous chosen vendors and check if still chosen, if not delete them from the event's list of selected vendors
-                    alreadyChosenVendors.ForEach(eventVendor =>
-                    {
-                        if (!vm.SelectedVendors.Any(vendorId => vendorId == eventVendor.VendorId))
-                        {
                             //remove from list
                             _context.EventVendors.Remove(eventVendor);
-                        }
-                    });
-
+                            }
+                        });
+                    }
                     //update information about event 
                     _context.Update(vm.Event);
                     await _context.SaveChangesAsync();
@@ -305,7 +308,9 @@ namespace PartyPlannerPro.Controllers
                  new SelectListItem {Text="This Week",Value="1"},
           new SelectListItem {Text="Next Two Weeks",Value="2" },
           new SelectListItem {Text="This Month",Value="3"},
-          new SelectListItem {Text="Past Events",Value="4"},
+          new SelectListItem {Text="Next Two Months",Value="4"},
+          new SelectListItem {Text="Past Events",Value="5"},
+
             };
             ViewBag.ListItem = selectDate;
 
@@ -326,15 +331,21 @@ namespace PartyPlannerPro.Controllers
                 {
                 items = items.Where(item => item.EventDate > DateTime.Today && item.EventDate < DateTime.Today.AddDays(30)).ToList();
                 }
-                //if EVentDate < now
-                else if (ListItem == 4)
+            // if Event Date is in the next 2 months
+            else if (ListItem == 4)
+            {
+                items = items.Where(item => item.EventDate > DateTime.Today && item.EventDate < DateTime.Today.AddDays(60)).ToList();
+            }
+            //if EVentDate < now
+            else if (ListItem == 5)
                 {
                 items = items.Where(item => item.EventDate < DateTime.Today).ToList();
                    
                 }
+                
             return View(items);
         }
-        //customer graphs method
+        //events graphs method
         public async Task<IActionResult> Reports()
         {
 

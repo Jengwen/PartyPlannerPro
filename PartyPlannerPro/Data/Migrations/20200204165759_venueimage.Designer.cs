@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PartyPlannerPro.Data;
 
 namespace PartyPlannerPro.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200204165759_venueimage")]
+    partial class venueimage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,8 +271,8 @@ namespace PartyPlannerPro.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Budget")
-                        .HasColumnType("int");
+                    b.Property<double>("Budget")
+                        .HasColumnType("float");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -395,6 +397,7 @@ namespace PartyPlannerPro.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MaxCapacity")
@@ -440,13 +443,13 @@ namespace PartyPlannerPro.Data.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c41da67d-ac7f-41dd-b792-bb28be21600c",
+                            ConcurrencyStamp = "ef1e90c0-9ad3-4361-ab1b-5d51f9590c73",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKFCZO7orbS1nOdwRyjpFZsEfP0JRtaoPfOvhiN8e/zm9AShHAPKkb4J851Mjw87ig==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKQk7qpujWu4aDUpSP2iqXqqTCdOEkpPEI2ASMkKOX9/MqJw7bSORBzhOFHl5YWxlA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
