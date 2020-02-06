@@ -12,15 +12,25 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                <p>Category Name</p>
-            </th>
-            <th></th>
+            
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+
+            @if (item.CategoryImage != null)
+
+            {
+                <td>
+                    @{
+                        var base64 = Convert.ToBase64String(item.CategoryImage);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    }
+
+                    <img class="userImg" src="@imgSrc" style="height : 100px; "/>
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryName)
             </td>

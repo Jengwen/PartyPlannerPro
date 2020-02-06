@@ -9,10 +9,22 @@
     <h4>Vendor Category Details</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </dt>
-        <dd class = "col-sm-10">
+        @if (Model.CategoryImage != null)
+        {
+            <dt>
+               <p> </p>
+            </dt>
+            <dd class="col-sm-10">
+                @{
+                    var base64 = Convert.ToBase64String(Model.CategoryImage);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                }
+
+                <img class="userImg" src="@imgSrc" />
+            </dd>
+        }
+      
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CategoryName)
         </dd>
     </dl>

@@ -23,17 +23,33 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Events</a>                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-area="" asp-controller="Events" asp-action="Index">All Events</a>
+                                <a class="dropdown-item" asp-controller="Events" asp-action="Calendar">Upcoming Events Calendar</a>
+
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Customers</a>                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-area="" asp-controller="Customers" asp-action="Index">All Customers</a>
+                                <a class="dropdown-item" asp-controller="Customers" asp-action="Reports">Customer Reports</a>
+
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Venues" asp-action="Index">Venues</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Venues</a>                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-area="" asp-controller="Venues" asp-action="Index">All Venues</a>
+                                <a class="dropdown-item" asp-controller="Events" asp-action="Reports">Most Popular Venues</a>
+
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Vendors" asp-action="Index">Vendors</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Vendors</a>                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-area="" asp-controller="Vendors" asp-action="Index">All Vendors</a>
+                                <a class="dropdown-item" asp-controller="VendorCategories" asp-action="Index">Vendor Categories</a>
+
+                            </div>
                         </li>
                     </ul>
                 </div>
