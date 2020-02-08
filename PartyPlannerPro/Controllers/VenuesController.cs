@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PartyPlannerPro.Data;
 using PartyPlannerPro.Models;
+using PartyPlannerPro.Models.ViewModels;
 
 namespace PartyPlannerPro.Controllers
 {
@@ -59,7 +61,10 @@ namespace PartyPlannerPro.Controllers
         // GET: Venues/Create
         public IActionResult Create()
         {
-            return View();
+            //instantiate view model for image uploader
+            UploadVenueViewModel vm = new UploadVenueViewModel();
+
+            return View(vm);
         }
 
         // POST: Venues/Create
@@ -67,31 +72,44 @@ namespace PartyPlannerPro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,VenueName,ImageUrl,ContactPerson,PhoneNumber,StreetAddress,City,State,MaxCapacity")] Venue venue)
+        public async Task<IActionResult> Create(UploadVenueViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(venue);
+                // check to see if image file exists
+                if (vm.ImageFile != null)
+                {
+                    // convert image into byte array
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await vm.ImageFile.CopyToAsync(memoryStream);
+                        vm.venue.Image = memoryStream.ToArray();
+                    }
+                };
+                _context.Add(vm.venue);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(venue);
+            return View(vm);
         }
 
         // GET: Venues/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            //instantiate view model for image uploader
+           EditVenueViewModel evm = new EditVenueViewModel();
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var venue = await _context.Venues.FindAsync(id);
-            if (venue == null)
+           evm.venue = await _context.Venues.FindAsync(id);
+            if (evm.venue == null)
             {
                 return NotFound();
             }
-            return View(venue);
+            return View(evm);
         }
 
         // POST: Venues/Edit/5
@@ -99,23 +117,33 @@ namespace PartyPlannerPro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,VenueName,ImageUrl,ContactPerson,PhoneNumber,StreetAddress,City,State,MaxCapacity")] Venue venue)
+        public async Task<IActionResult> Edit(int id, EditVenueViewModel evm)
         {
-            if (id != venue.Id)
+            if (id != evm.venue.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                // check to see if image file exists
+                if (evm.ImageFile != null)
+                {
+                    // convert image into byte array
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await evm.ImageFile.CopyToAsync(memoryStream);
+                        evm.venue.Image = memoryStream.ToArray();
+                    }
+                };
                 try
                 {
-                    _context.Update(venue);
+                    _context.Update(evm.venue);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VenueExists(venue.Id))
+                    if (!VenueExists(evm.venue.Id))
                     {
                         return NotFound();
                     }
@@ -126,7 +154,7 @@ namespace PartyPlannerPro.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(venue);
+            return View(evm);
         }
 
         // GET: Venues/Delete/5

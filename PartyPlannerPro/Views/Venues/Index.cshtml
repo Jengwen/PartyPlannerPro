@@ -29,52 +29,66 @@
 <div class="container">
     <div class="row">
         @foreach (var item in Model)
+
         { <div class="card" style="width: 18rem;">
-                <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" class="card-img-top" alt="venue">
-                <div class="card-body">
-                    <h5>
-                        @Html.DisplayFor(modelItem => item.VenueName)
-                    </h5>
-                    <h6>
-                        @Html.DisplayNameFor(modelItem => item.ContactPerson)
-                    </h6>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.ContactPerson)
-                    </p>
-                    <h6>
-                        @Html.DisplayNameFor(modelItem => item.PhoneNumber)
-                    </h6>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </p>
-                    <h6>
-                        @Html.DisplayNameFor(modelItem => item.StreetAddress)
-                    </h6>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.StreetAddress)
-                    </p>
-                    <h6>
-                        @Html.DisplayNameFor(modelItem => item.City)
-                    </h6>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.City)
-                    </p>
-                    <h6>
-                        @Html.DisplayNameFor(modelItem => item.State)
-                    </h6>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.State)
-                    </p>
-                    <h6>
-                        @Html.DisplayNameFor(modelItem => item.MaxCapacity)
-                    </h6>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.MaxCapacity)
-                    </p>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                </div>
-            </div>
+               <div class="card-body">
+            
+                @if (item.Image != null)
+
+                {
+                   <td>
+                       @{
+                           var base64 = Convert.ToBase64String(item.Image);
+                           var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                       }
+
+                       <img class="userImg" src="@imgSrc" style="height : 100px; " />
+                   </td>
+                }
+
+            <h5>
+                @Html.DisplayFor(modelItem => item.VenueName)
+            </h5>
+            <h6>
+                @Html.DisplayNameFor(modelItem => item.ContactPerson)
+            </h6>
+            <p>
+                @Html.DisplayFor(modelItem => item.ContactPerson)
+            </p>
+            <h6>
+                @Html.DisplayNameFor(modelItem => item.PhoneNumber)
+            </h6>
+            <p>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </p>
+            <h6>
+                @Html.DisplayNameFor(modelItem => item.StreetAddress)
+            </h6>
+            <p>
+                @Html.DisplayFor(modelItem => item.StreetAddress)
+            </p>
+            <h6>
+                @Html.DisplayNameFor(modelItem => item.City)
+            </h6>
+            <p>
+                @Html.DisplayFor(modelItem => item.City)
+            </p>
+            <h6>
+                @Html.DisplayNameFor(modelItem => item.State)
+            </h6>
+            <p>
+                @Html.DisplayFor(modelItem => item.State)
+            </p>
+            <h6>
+                @Html.DisplayNameFor(modelItem => item.MaxCapacity)
+            </h6>
+            <p>
+                @Html.DisplayFor(modelItem => item.MaxCapacity)
+            </p>
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+        </div>
+    </div>
         }
 
        </div>
