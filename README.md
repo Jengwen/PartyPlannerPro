@@ -24,3 +24,38 @@ Two options are available from the venue navigation dropdown, you can see a grap
 ## Events
 From the events tab on the navigation bar, the user can see all of the events upcoming or a sortable calendar of their events.  When you click on the edit link the user can add vendors or change other information about the event. The details page of the event also contains a list of vendors for the event with a link to their details. Upon clicking the evnt calendar the user can sort events by various ranges of dates.
 
+## TECHNICAL NOTES
+
+I used ASP.Net with C# and Bootstrap for styling with a MySQL server
+
+This project was built with the following:
+
+*  ASP.Net 
+*  https://getbootstrap.com/
+*  
+*  
+
+
+### Using this APP
+
+Fork the directory from https://github.com/jengwen/PartyPlannerPro your own local repository.
+
+
+You will need to install the following to run the program locally:
+
+```
+```
+In the project directory, you can run:
+
+``` ```
+
+Which runs the app in the development mode.
+Open http://localhost:3000 to view it in the browser. The page will reload if you make edits.
+You will also see any lint errors in the console.
+
+You will need to add a local database....
+
+
+## Author
+
+This application was created by Jennifer Johnson see more <https://github.com/jengwen>
