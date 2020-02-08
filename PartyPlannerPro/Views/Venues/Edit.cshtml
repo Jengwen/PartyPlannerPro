@@ -1,4 +1,4 @@
-﻿@model PartyPlannerPro.Models.Venue
+﻿@model PartyPlannerPro.Models.ViewModels.EditVenueViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -9,49 +9,48 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit"  enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="venue.Id" />
             <div class="form-group">
-                <label asp-for="VenueName" class="control-label"></label>
-                <input asp-for="VenueName" class="form-control" />
-                <span asp-validation-for="VenueName" class="text-danger"></span>
+                <label asp-for="venue.VenueName" class="control-label"></label>
+                <input asp-for="venue.VenueName" class="form-control" />
+                <span asp-validation-for="venue.VenueName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ContactPerson" class="control-label"></label>
-                <input asp-for="ContactPerson" class="form-control" />
-                <span asp-validation-for="ContactPerson" class="text-danger"></span>
+                <label asp-for="venue.ContactPerson" class="control-label"></label>
+                <input asp-for="venue.ContactPerson" class="form-control" />
+                <span asp-validation-for="venue.ContactPerson" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                <label asp-for="venue.PhoneNumber" class="control-label"></label>
+                <input asp-for="venue.PhoneNumber" class="form-control" />
+                <span asp-validation-for="venue.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StreetAddress" class="control-label"></label>
-                <input asp-for="StreetAddress" class="form-control" />
-                <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                <label asp-for="venue.StreetAddress" class="control-label"></label>
+                <input asp-for="venue.StreetAddress" class="form-control" />
+                <span asp-validation-for="venue.StreetAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
+                <label asp-for="venue.City" class="control-label"></label>
+                <input asp-for="venue.City" class="form-control" />
+                <span asp-validation-for="venue.City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="State" class="control-label"></label>
-                <input asp-for="State" class="form-control" />
-                <span asp-validation-for="State" class="text-danger"></span>
+                <label asp-for="venue.State" class="control-label"></label>
+                <input asp-for="venue.State" class="form-control" />
+                <span asp-validation-for="venue.State" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MaxCapacity" class="control-label"></label>
-                <input asp-for="MaxCapacity" class="form-control" />
-                <span asp-validation-for="MaxCapacity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
+                <label asp-for="venue.MaxCapacity" class="control-label"></label>
+                <input asp-for="venue.MaxCapacity" class="form-control" />
+                <span asp-validation-for="venue.MaxCapacity" class="text-danger"></span>
+                <div class="form-group">
+                    <label asp-for="ImageFile" class="control-label"></label>
+                    <input asp-for="ImageFile" type="file" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-light" />
             </div>
