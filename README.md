@@ -7,7 +7,7 @@ they can also see a list of that customer's events and see a graph which lets yo
 
 ## Home
 
-![home](/home (2).jpg)
+![home](/home.jpg)
 &nbsp;
 
 Users begin at the home page where they are asked to log in or register.
@@ -23,7 +23,7 @@ Once logged in the user is logged in they can click on the Customers tab on the 
 &nbsp;
 If you need to see more information about a customer you can click on the details link which will also show a list of that customer's upcoming events. While on the list of customers, a user can also add a new customer. Also on the dropdown menu for customers, users can view a graph of customers with the highest spending.
 &nbsp;
-![customer spending](/customer spending.jpg)
+![customer spending](/customerSpending.jpg)
 &nbsp;
 
 &nbsp;
@@ -38,14 +38,19 @@ If you need a vendor in a specific city you can search by city in the search bar
 &nbsp
 
 ## Venues
-Two options are available from the venue navigation dropdown, you can see a graph of most popular venues, or see a list of venues with their photos. If you need a venue in a specific city you can search for that city in the search bar. If you need a venue that holds a specific number of people, the venues can be searched by entering a number of guests in the search bar.
+Two options are available from the venue navigation dropdown, you can see a graph of most popular venues, 
+&nbsp;
+![venues](/popVenues.jpg)
+&nbsp;
+
+or see a list of venues with their photos. If you need a venue in a specific city you can search for that city in the search bar. If you need a venue that holds a specific number of people, the venues can be searched by entering a number of guests in the search bar.
 &nbsp;
 ![venues](/venues.jpg)
 &nbsp;
 
 When you click on the venue detail you can also see a list of their upcoming events with all of the relevant details about the venue.
 &nbsp;
-![venuedetail](/venue detail.jpg)
+![venuedetail](/venueDetail.jpg)
 &nbsp;
 
 When you click on the create a new venue link you will be prompted with a form to create a venue and upload a photo of the event.
@@ -54,7 +59,7 @@ When you click on the create a new venue link you will be prompted with a form t
 ## Events
 From the events tab on the navigation bar, the user can see all of the events upcoming or a sortable calendar of their events.  When you click on the edit link the user can add vendors or change other information about the event. The details page of the event also contains a list of vendors for the event with a link to their details. 
 &nbsp;
-![event detail](/event detail.jpg)
+![event detail](/eventDetail.jpg)
 &nbsp;
 
 Upon clicking the evnt calendar the user can sort events by various ranges of dates.
