@@ -40,20 +40,10 @@ This project was built with the following:
 
 Fork the directory from https://github.com/jengwen/PartyPlannerPro your own local repository.
 
+Open the solution from the PartPlannerPro folderin your terminal. 
 
-You will need to install the following to run the program locally:
+You will need to add a local database by searching for the SQL Object Explorer, select your server, then clcik on databases folder, right click to add database. Add a database named PartyPlannerPro. Now you can run the application from the green ISS arrow.
 
-```
-```
-In the project directory, you can run:
-
-``` ```
-
-Which runs the app in the development mode.
-Open http://localhost:3000 to view it in the browser. The page will reload if you make edits.
-You will also see any lint errors in the console.
-
-You will need to add a local database....
 
 
 ## Author
