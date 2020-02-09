@@ -7,7 +7,7 @@ they can also see a list of that customer's events and see a graph which lets yo
 
 ## Home
 
-![home](home (2).jpg)
+![home](/home (2).jpg)
 &nbsp;
 
 Users begin at the home page where they are asked to log in or register.
@@ -45,7 +45,7 @@ Two options are available from the venue navigation dropdown, you can see a grap
 
 When you click on the venue detail you can also see a list of their upcoming events with all of the relevant details about the venue.
 &nbsp;
-![venuedetail](/venuedetail.jpg)
+![venuedetail](/venue detail.jpg)
 &nbsp;
 
 When you click on the create a new venue link you will be prompted with a form to create a venue and upload a photo of the event.
@@ -54,7 +54,7 @@ When you click on the create a new venue link you will be prompted with a form t
 ## Events
 From the events tab on the navigation bar, the user can see all of the events upcoming or a sortable calendar of their events.  When you click on the edit link the user can add vendors or change other information about the event. The details page of the event also contains a list of vendors for the event with a link to their details. 
 &nbsp;
-![event detail](/eventdetail.jpg)
+![event detail](/event detail.jpg)
 &nbsp;
 
 Upon clicking the evnt calendar the user can sort events by various ranges of dates.
