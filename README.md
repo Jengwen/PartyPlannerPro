@@ -7,7 +7,7 @@ they can also see a list of that customer's events and see a graph which lets yo
 
 ## Home
 
-![home](/home.jpg)
+![home](home (2).jpg)
 &nbsp;
 
 Users begin at the home page where they are asked to log in or register.
