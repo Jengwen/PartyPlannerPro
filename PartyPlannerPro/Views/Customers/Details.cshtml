@@ -44,9 +44,9 @@
 
                         if (Events.EventDate > DateTime.Now)
                         {
-                            <li>
-                                @Html.DisplayFor(model => Events.EventName)
-                            </li>
+                    <li>
+                        <a asp-controller="Events" asp-action="Details" asp-route-id="@Events.Id"> @Html.DisplayFor(model => Events.EventName)</a>
+                    </li>
                         }
                 </ul>
             </div>
